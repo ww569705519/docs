@@ -1,6 +1,6 @@
 ![logo](images/icon1.svg)
 
-# docsify
+# 阿呆是傻逼好吗
 
 > A magical documentation site generator.
 
