@@ -1,6 +1,6 @@
 ![logo](images/icon1.svg)
 
-# VWX
+# Vue-WeChat
 
 > A magical documentation site generator.
 
