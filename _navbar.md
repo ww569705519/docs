@@ -5,7 +5,8 @@
  - [封面](zh-cn/cover.md)
 
 - 代码规范
-  - [CSS规范](zh-cn/configuration.md)
+  - [HTML规范](norm/html5.md)
+  - [CSS规范](norm/css.md)
   - [JS规范](zh-cn/themes.md)
   - [使用插件](zh-cn/plugins.md)
   - [Markdown 配置](zh-cn/markdown.md)

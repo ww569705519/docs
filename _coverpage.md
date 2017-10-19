@@ -1,6 +1,6 @@
 ![logo](images/icon1.svg)
 
-# 阿呆是傻逼好吗
+# VWX
 
 > A magical documentation site generator.
 
