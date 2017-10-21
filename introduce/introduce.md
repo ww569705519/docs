@@ -1,7 +1,5 @@
 # **vue-wechat介绍**
-
 > A Vue.js project
-
 
 # **安装依赖**
 
@@ -45,4 +43,3 @@
 
 # **其他**
 
-# fuck

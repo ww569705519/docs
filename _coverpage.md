@@ -9,8 +9,8 @@
 - Not build static html files
 
 
-[GitHub](https://github.com/QingWei-Li/docsify/)
-[Get Started](#quick-start)
+[GitHub](https://github.com/ww569705519/vue-wechat)
+[Get Started](/introduce/introduce.md)
 
 <!-- 背景色 -->
 ![color](linear-gradient(to left bottom, hsl(249, 100%, 85%) 0%,hsl(206, 100%, 85%) 100%))
