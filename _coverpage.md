@@ -1,12 +1,11 @@
-![logo](images/icon1.svg)
+![logo](images/vue.svg)
 
 # Vue-WeChat
 
-> A magical documentation site generator.
 
-- Simple and lightweight (~12kb gzipped)
-- Multiple themes
-- Not build static html files
+- Vue-WeChat基于`Vue`和`Vux`(2.x)
+- 封装了基本的配置以及定制了一些开发规范
+- 主要服务于微信端
 
 
 [GitHub](https://github.com/ww569705519/vue-wechat)
