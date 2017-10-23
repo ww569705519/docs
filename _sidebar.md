@@ -1,7 +1,7 @@
 - 简介
   - [基本介绍](introduce/intro.md)
   - [性能优化](more-pages.md)
-  - [ajax请求](custom-navbar.md)
+  - [ajax请求](introduce/ajax.md)
   - [开发过程](cover.md)
   - [性能优化](cover.md)
   - [用户体验优化](cover.md)
