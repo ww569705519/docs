@@ -1,6 +1,6 @@
 - 简介
   - [基本介绍](introduce/intro.md)
-  - [性能优化](more-pages.md)
+  - [配置介绍](introduce/config.md)
   - [ajax请求](introduce/ajax.md)
   - [开发过程](cover.md)
   - [性能优化](cover.md)

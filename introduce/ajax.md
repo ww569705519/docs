@@ -1,8 +1,8 @@
-## axios介绍
+## axios
 
-Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。
+Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。传送门 [Axios](https://www.kancloud.cn/yunye/axios/234845)
 
-### Features
+### 功能介绍
 
 - 从浏览器中创建 XMLHttpRequests
 - 从 node.js 创建 http 请求
@@ -14,81 +14,209 @@ Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js �
 - 客户端支持防御 XSRF
 
 !> 本模板中使用了axios，并且已经封装好其使用方法，如想使用其它插件请在 `main.js` 中关闭
-```bash
-npm install 
+
+## http.js封装
+
+```js
+import Vue from 'vue'
+import axios from 'axios'
+import qs from "qs"
+// 创建实例，可以使用自定义配置新建一个 axios 实例
+
+const Axios = axios.create({
+  // 项目基础地址
+  baseURL: 'http://rapapi.org',
+  // 调用超时时间
+  timeout: 10000,
+  responseType: "json",
+  headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
+})
+
+// 添加请求拦截器
+Axios.interceptors.request.use(function (config) {
+    // 在发送请求之前做些什么
+    if (config.method === "post" || config.method === "put" || config.method === "delete") {
+      // 序列化
+      config.data = qs.stringify(config.data);
+    }
+    // loading显示
+    Vue.$vux.loading.show()
+    // 若是有做鉴权token , 就给头部带上token
+    return config;
+  }, function (error) {
+    // 对请求错误做些什么
+    // loading隐藏
+    Vue.$vux.loading.hide()
+    return Promise.reject(error);
+  });
+
+// 添加响应拦截器
+Axios.interceptors.response.use(function (response) {
+    // 对响应数据做点什么
+    // loading显示
+    Vue.$vux.loading.hide()
+    // 成功返回
+    if (response.status == 200) {
+      return response.data
+    }else{
+      // 成功返回，但是状态码不是200，返回状态码
+      Vue.$vux.toast.text(response.status,'middle')
+      return response;
+    }
+  }, function (error) {
+    // 对响应错误做点什么
+    // loading隐藏
+    Vue.$vux.loading.hide()
+    return Promise.reject(error);
+  });
+
+// 对axios的实例重新封装成一个plugin ,方便 Vue.use(xxxx)
+export default {
+  install: function(Vue, Option) {
+    Object.defineProperty(Vue.prototype, "$http", { value: Axios });
+  }
+};
+```
+
+### 在main.js里面引入使用
+
+```js
+import http from './utils/http.js'
+Vue.use(http)
+```
+
+### 调用实例
+
+```js
+created(){
+    this.$http.get('/mockjsdata/27939/test').then(res=>{
+      console.log(res)
+    },error=>{
+      console.log(error)
+    })
+  }
 ```
 
 ## 请求方法
 
-```
-npm run dev
-```
+### get
 
-* `index.html` as the entry file
-* `README.md` as the home page
-* `.nojekyll` prevents GitHub Pages from ignoring files that begin with an underscore
+| name        | type           | default  |description  |
+| ------------- |:-------------:| -----:|-----:|
+| url   | string |  |接口调用地址 |
+| params      | object      |    |请求参数 |
 
-You can easily update the documentation in `./docs/README.md`, of course you can add [more pages](more-pages.md).
-
-## Preview your site
-
-Run the local server with `docsify serve`. You can preview your site in your browser on `http://localhost:3000`.
-
-```bash
-docsify serve docs
-```
-
-?> For more use cases of `docsify-cli`, head over to the [docsify-cli documentation](https://github.com/QingWei-Li/docsify-cli).
-
-## Manual initialization
-
-If you don't like `npm` or have trouble installing the tool, you can manually create `index.html`:
-
-```html
-<!-- index.html -->
-
-<!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="//unpkg.com/docsify/themes/vue.css">
-</head>
-<body>
-  <div id="app"></div>
-</body>
-<script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
-</html>
+```js
+this.$http.get(url,params)
+  .then(function (response) {
+    // 响应成功
+    console.log(response);
+  })
+  .catch(function (error) {
+    // 响应失败 
+    console.log(error);
+  });
 ```
 
-If you installed python on your system, you can easily use it to run a static server to preview your site.
+### post
 
-```bash
-cd docs && python -m SimpleHTTPServer 3000
+| name        | type           | default  |description  |
+| ------------- |:-------------:| -----:|-----:|
+| url   | string |  |接口调用地址 |
+| params      | object      |    |请求参数 |
+
+```js
+this.$http.post(url,params)
+  .then(function (response) {
+    // 响应成功
+    console.log(response);
+  })
+  .catch(function (error) {
+    // 响应失败 
+    console.log(error);
+  });
 ```
 
-## Loading dialog
+!> 项目中如果碰到多个请求，可以采用并发请求的方式处理
 
-If you want, you can show a loading dialog before docsify starts to render your documentation:
+```js
+function getUserAccount() {
+  return axios.get('/user/12345');
+}
 
-```html
-  <!-- index.html -->
+function getUserPermissions() {
+  return axios.get('/user/12345/permissions');
+}
 
-  <div id="app">Please wait...</div>
+this.$http.all([getUserAccount(), getUserPermissions()])
+  .then(axios.spread(function (acct, perms) {
+    // 两个请求现在都执行完成
+  }));
 ```
 
-You should set the `data-app` attribute if you changed `el`:
+### 并发
 
-```html
-  <!-- index.html -->
+处理并发请求的助手函数
 
-  <div data-app id="main">Please wait...</div>
+```js
+axios.all(iterable)
+axios.spread(callback)
+```
 
-  <script>
-    window.$docsify = {
-      el: '#main'
+## 拦截器
+在请求或响应被 then 或 catch 处理前拦截它们。
+
+```js
+// 添加请求拦截器
+axios.interceptors.request.use(function (config) {
+    // 在发送请求之前做些什么
+    return config;
+  }, function (error) {
+    // 对请求错误做些什么
+    return Promise.reject(error);
+  });
+
+// 添加响应拦截器
+axios.interceptors.response.use(function (response) {
+    // 对响应数据做点什么
+    return response;
+  }, function (error) {
+    // 对响应错误做点什么
+    return Promise.reject(error);
+  });
+```
+
+如果你想在稍后移除拦截器，可以这样：
+
+```js
+var myInterceptor = axios.interceptors.request.use(function () {/*...*/});
+axios.interceptors.request.eject(myInterceptor);
+可以为自定义 axios 实例添加拦截器
+
+var instance = axios.create();
+instance.interceptors.request.use(function () {/*...*/});
+错误处理
+axios.get('/user/12345')
+  .catch(function (error) {
+    if (error.response) {
+      // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message);
     }
-  </script>
+    console.log(error.config);
+  });
 ```
 
-Compare [el configuration](configuration.md#el).
+可以使用 validateStatus 配置选项定义一个自定义 HTTP 状态码的错误范围。
+
+```js
+axios.get('/user/12345', {
+  validateStatus: function (status) {
+    return status < 500; // 状态码在大于或等于500时才会 reject
+  }
+})
+```

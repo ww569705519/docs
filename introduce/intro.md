@@ -12,6 +12,20 @@ npm install
 npm run dev
 ```
 
+### 目录介绍
+
+```
+├─build
+├─config
+├─src
+│  ├─assets
+│  ├─components
+│  ├─config
+│  ├─router
+│  └─utils
+└─static
+```
+
 * `index.html` as the entry file
 * `README.md` as the home page
 * `.nojekyll` prevents GitHub Pages from ignoring files that begin with an underscore
