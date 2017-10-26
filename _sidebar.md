@@ -3,8 +3,8 @@
   - [配置介绍](introduce/config.md)
   - [ajax请求](introduce/ajax.md)
   - [开发过程](cover.md)
-  - [性能优化](cover.md)
-  - [用户体验优化](cover.md)
+  - [性能优化](introduce/nature.md)
+  - [用户体验优化](introduce/userExperience.md)
   - [常用插件](cover.md)
   - [其他](cover.md)
 
