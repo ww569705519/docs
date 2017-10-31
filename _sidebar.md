@@ -2,7 +2,7 @@
   - [基本介绍](introduce/intro.md)
   - [配置介绍](introduce/config.md)
   - [ajax请求](introduce/ajax.md)
-  - [开发过程](cover.md)
+  - [开发过程](introduce/process.md)
   - [性能优化](introduce/nature.md)
   - [用户体验优化](introduce/userExperience.md)
   - [常用插件](cover.md)
