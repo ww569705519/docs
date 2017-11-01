@@ -5,6 +5,7 @@
   - [开发过程](introduce/process.md)
   - [性能优化](introduce/nature.md)
   - [用户体验优化](introduce/userExperience.md)
+  - [自动部署到服务器](introduce/auto-deploy-to-webserver.md)
   - [常用插件](cover.md)
   - [其他](cover.md)
 
