@@ -34,7 +34,7 @@ npm install --save ssh2
 const fs = require('fs-extra')
 const path = require('path')
 const scp = require('scp2').scp
-const config = require('../config/deploy.js')  //在配置文件夹config里放置deploy.js配置文件
+const config = require('../config/deploy.js')  //在配置文件夹config里放置另一个deploy.js配置文件
 const Client = require('ssh2').Client
 
 const program = config.SSH_USER + ':' +
@@ -44,17 +44,17 @@ const program = config.SSH_USER + ':' +
               config.SSH_PATH
 
 const target = path.join(__dirname, '../target')
-const dist = path.join(__dirname, '../dist')     //目录
+const dist = path.join(__dirname, '../dist')     //本地打包目录
 
 fs.ensureDirSync(target)
 fs.ensureDirSync(dist)
 
-fs.copySync(dist, path.join(target, 'dist/')) //前端项目打包路径
-<!-- fs.copySync(path.join(__dirname, '../docker-compose.yml'), path.join(target, 'docker-compose.yml')) -->docker文件
-<!-- fs.copySync(path.join(__dirname, './nginx.conf'), path.join(target, 'build/nginx.conf')) -->  nginx配置文件
+fs.copySync(dist, path.join(target, 'dist/'))     //复制dist下所有的文件和文件夹
+//fs.copySync(path.join(__dirname, '../docker-compose.yml'), path.join(target, 'docker-compose.yml')) //docker文件，视情况
+//fs.copySync(path.join(__dirname, './nginx.conf'), path.join(target, 'build/nginx.conf'))   //nginx配置文件
 
 
-console.log('Copying...')
+console.log('Copying...')  //开始时，提示语句
 
 scp(target, program, (err) => {
   if (err) {
@@ -62,7 +62,7 @@ scp(target, program, (err) => {
     fs.removeSync(target)
   }
 
-  console.log('Copy is done.')
+  console.log('Copy is done.') //复制完成提示
 
   let conn = new Client()
   conn.on('ready', function() {
@@ -81,6 +81,7 @@ scp(target, program, (err) => {
 function onExec(err, stream, conn) {
   if (err) {
     throw err
+    //console.log(err) //提示报错
     fs.removeSync(target)
   }
 
@@ -114,7 +115,7 @@ module.exports = {
 ## 打包项目：
 
 ```bash
-npm run dev
+npm run build
 ```
 
 ## 部署
