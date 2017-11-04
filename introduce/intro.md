@@ -1,5 +1,12 @@
 ## 快速开始
 
+从git仓库克隆代码
+
+```bash
+git clone https://github.com/ww569705519/vue-wechat.git
+cd vue-wechat
+```
+
 安装项目依赖
 
 ```bash
@@ -8,7 +15,7 @@ npm install
 
 ## 项目运行
 
-```
+```bash
 npm run dev
 ```
 
